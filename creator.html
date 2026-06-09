@@ -117,7 +117,7 @@
 		var cube = function(x,y,z,sx,sy,sz,c,cc){
 			setpnts(x,y,z)
 			z_sorting.push({
-			depth: pz*300,
+			depth: parseInt(pz, 1),
 			draw: function(){
 			d.lineWidth = 9;
 			d.beginPath()
