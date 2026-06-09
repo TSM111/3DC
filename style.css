@@ -2,7 +2,74 @@ html{
      background-color: #7da9f0;
 }
 
-body{
+
+.centered{
+    
+   text-align: center;
+    background-color: #bdd3f5;
+    border-radius: 10px;
+    height: 50px;
+    padding-top: 10px;
+    
+    
+}
+.bod{
+    
+   text-align: center;
+    background-color: #bdd3f5;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: "Google Sans Code", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "MONO" 1; 
+    
+}
+
+.menu{
     background-color: #a2b8f5;
     text-align: center;
+    border-radius: 10px;
+    padding: 2px 6px; 
+    text-decoration: none;
+    font-size: 30px;
+    display: inline-block; 
+    font-family: "Google Sans Code", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "MONO" 1; 
+     text-align: center; 
 }
+.left{
+    background-color: #11458e;
+    text-align: left;
+    border-radius: 10px;
+    padding: 2px 6px; 
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Google Sans Code", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "MONO" 1;  
+}
+
+.left1{
+    background-color: #a2b8f5 ;
+    text-align: left;
+    border-radius: 10px;
+    padding: 2px 6px; 
+    color: #122969;
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Google Sans Code", monospace;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-variation-settings:
+    "MONO" 1;  
+}
+

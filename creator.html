@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<title>3DN</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="icon" type="image/x-icon" href="3dn.png">
+	
+</head>
+<body>
+	<div class="centered">
+    	<a href="Menu.html" class="menu">Menu</a>
+    	<a href="creator.html" class="menu">Creator</a>
+	</div>
+	<br>
+	<button id="run" class="left">></button>
+	<button id="STOP" class="left">x</button>
+	<br>
+	<canvas id="ddd" width="400" height="400"></canvas>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<div class="left">	
+	<textarea  class="left1" placeholder="Put Your code here..." id="code" rows="10" cols="50"></textarea>
+	</div>
+	<br>
+	<div class="left">	
+		<input type="file" id="file" class="left" ><button  id="upbtm"  class="left">load</button></input>
+		<button id="downloadBtm"  class="left" >Save Text as File</button class="left">
+		</div>
+	<script>
+		$("#upbtm").click(function(){
+			const fi = $('#file')[0]
+			const file = fi.files[0]
+			const reader = new FileReader();
+			reader.onload = function(event){
+				const cont = event.target.result
+				$('#code').val(cont); 
+			}
+			reader.readAsText(file);
+		})
+		$("#downloadBtm").click(function(){
+			const t = $("#code").val()
+			const blob = new Blob([t],{ type: 'text/plain' })
+			const du = window.URL.createObjectURL(blob)
+			$('<a>', {
+    href: du,
+    download: 'code.txt'
+  }).appendTo('body').get(0).click(); 
+
+  
+  window.URL.revokeObjectURL(du);
+  $('a[href="' + du + '"]').remove();
+});
+
+
+	</script>
+	<script>
+		 
+		const canvas = document.getElementById("ddd");
+        const ctx = canvas.getContext("2d");
+		ctx.lineWidth="10"
+		ctx.beginPath()
+		ctx.moveTo(0,0)
+		ctx.lineTo(400,0)
+		ctx.moveTo(400,0)
+		ctx.lineTo(400,400)
+		ctx.moveTo(400,400)
+		ctx.lineTo(0,400)
+		ctx.moveTo(0,400)
+		ctx.lineTo(0,0)
+		ctx.stroke()
+		ctx.closePath()
+
+	</script>
+	<p id="keyt">None</p>
+	
+	<script>
+		const canvwas = document.getElementById("ddd");
+		const d = canvwas.getContext("2d");
+		var px = 0
+		var py = 0
+		var pz = 0
+		var r = ""
+		var mam = 5
+		var cx = 0
+		var cy = 0
+		var cz = 1
+		var ry = 0
+		var rx =0
+		
+		
+		var fl = -300
+		var setpnts = function(x,y,z){
+		    
+			px = (Math.cos(rx)*(x-cx))+(Math.sin(rx)*(z-cz))
+			
+			py = (Math.cos(ry) * (y - cy)) + (Math.sin(ry) * ((Math.sin(rx) * (x - cx)) - (Math.cos(rx) * (z - cz))))
+    		pz = (Math.sin(ry) * (y - cy)) - (Math.cos(ry) * ((Math.sin(rx)*(x-cx))-(Math.cos(rx)*(z-cz))))
+
+			px=px-3
+		}
+		
+		var point = function(x,y,z){
+		    setpnts(x,y,z)
+			if (pz>0){
+				d.moveTo(((px+3)/pz)*(fl*-1)+200,(py/pz)*fl+200)
+			}
+		}
+		
+		var drawto = function(x,y,z){
+		    setpnts(x,y,z)
+			if (pz>0){
+				d.lineTo(((px+3)/pz)*(fl*-1)+200,(py/pz)*fl+200)
+			}
+		}
+		var z_sorting = [];
+		var cube = function(x,y,z,sx,sy,sz,c,cc){
+			setpnts(x,y,z)
+			z_sorting.push({
+			depth: pz,
+			draw: function(){
+			d.lineWidth = 9;
+			d.beginPath()
+			point((x)+sx/2,y+sy/2,z-sz/2)
+			drawto((x)+sx/2,y+sy/2,z+sz/2)
+			drawto((x)-sx/2,y+sy/2,z+sz/2)
+			drawto((x)-sx/2,y+sy/2,z-sz/2)
+			drawto((x)+sx/2,y+sy/2,z-sz/2)
+			d.closePath()
+			d.fillStyle = c
+			d.fill()
+			d.beginPath()
+			point((x)+sx/2,y-sy/2,z-sz/2)
+			drawto((x)+sx/2,y-sy/2,z+sz/2)
+			drawto((x)-sx/2,y-sy/2,z+sz/2)
+			drawto((x)-sx/2,y-sy/2,z-sz/2)
+			drawto((x)+sx/2,y-sy/2,z-sz/2)
+			d.closePath()
+			d.fillStyle = c
+			d.fill()
+			d.beginPath()
+			//f side
+			
+			d.beginPath()	
+			point((x)-sx/2,y+sy/2,z-sz/2)
+			drawto((x)+sx/2,y+sy/2,z-sz/2)
+			drawto((x)+sx/2,y-sy/2,z-sz/2)
+			drawto((x)-sx/2,y-sy/2,z-sz/2)
+			drawto((x)-sx/2,y+sy/2,z-sz/2)
+			d.closePath()
+			d.fillStyle = c
+			d.fill()
+
+
+			point((x)-sx/2,y+sy/2,z+sz/2)
+			drawto((x)+sx/2,y+sy/2,z+sz/2)
+			drawto((x)+sx/2,y-sy/2,z+sz/2) 
+			drawto((x)-sx/2,y-sy/2,z+sz/2)
+			drawto((x)-sx/2,y+sy/2,z+sz/2)
+			d.closePath()
+			d.fillStyle = c
+			d.fill()
+			//b side
+			
+		
+			d.beginPath()
+			setpnts((x)-sx/2,y+sy/2,z-sz/2)
+			point((x)-sx/2,y+sy/2,z-sz/2)
+			drawto((x)-sx/2,y+sy/2,z+sz/2)
+			drawto((x)-sx/2,y-sy/2,z+sz/2)
+			drawto((x)-sx/2,y-sy/2,z-sz/2)
+			drawto((x)-sx/2,y+sy/2,z-sz/2)
+			d.closePath()
+			d.fillStyle = c
+			d.fill()
+			
+			d.beginPath()
+			point((x)+sx/2,y+sy/2,z-sz/2)
+			drawto((x)+sx/2,y+sy/2,z+sz/2)
+			drawto((x)+sx/2,y-sy/2,z+sz/2)
+			drawto((x)+sx/2,y-sy/2,z-sz/2)
+			drawto((x)+sx/2,y+sy/2,z-sz/2)
+			d.closePath()
+			d.fillStyle = c
+			d.fill()
+			}
+			})
+			
+			
+			
+			
+			
+		}
+		  
+		
+		setInterval(() =>{
+			ctx.fillStyle = "blue"
+			ctx.fillRect(5,5,390,390)
+			eval(r)
+			z_sorting.sort((a, b) => b.depth - a.depth);
+			for(var i = 0; i < z_sorting.length; i++) {
+                if(z_sorting[i].depth > 0.3) {
+                    z_sorting[i].draw();
+                }
+            }
+			eval(r)
+			ctx.strokeStyle = "black"
+			ctx.lineWidth="10"
+			ctx.beginPath()
+			ctx.moveTo(0,0)
+			ctx.lineTo(400,0)
+			ctx.moveTo(400,0)
+			ctx.lineTo(400,400)
+			ctx.moveTo(400,400)
+			ctx.lineTo(0,400)
+			ctx.moveTo(0,400)
+			ctx.lineTo(0,0)
+			ctx.stroke()
+			ctx.closePath()
+			z_sorting=[]
+			
+	
+		},60)
+			
+		
+		
+	</script>
+	<script>
+		$(document).keydown(function(event) {
+			if(event.key==="ArrowLeft"){
+				rx+=0.1
+			}
+			if(event.key==="ArrowUp"){
+				ry+=0.1
+			}
+			if(event.key==="ArrowDown"){
+				ry-=0.1
+			}
+			if(event.key==="ArrowRight"){
+				rx-=0.1
+			}
+			if(event.key==="w"){
+				cx+=Math.sin(rx)*-0.5
+				cz+=Math.cos(rx)*0.5
+				
+			}
+			if(event.key==="s"){
+				cx+=Math.sin(rx)*0.5
+				cz+=Math.cos(rx)*-0.5
+				
+			}
+			if(event.key==="a"){
+				cx+=Math.cos(rx)*-0.5
+				cz+=Math.sin(rx)*-0.5
+				
+			}
+			if(event.key==="d"){
+				cx+=Math.cos(rx)*0.5
+				cz+=Math.sin(rx)*0.5
+				
+			}
+			$("#keyt").text(event.key)
+		})
+		
+		
+		
+	</script>
+	<script>
+		$("#run").click(function(event) {
+  try {
+    let inputCode = $("#code").val();
+
+    eval(inputCode); 
+
+    r = inputCode.replace(/alert\(.*?\);?/g, ""); 
+
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+});
+
+
+$("#STOP").click(function(event) {
+  r = ""; 
+});
+
+		
+
+	</script>
+</body>
+</html>
