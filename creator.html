@@ -114,7 +114,8 @@
 		}
 		var z_sorting = [];
 		var cube = function(x,y,z,sx,sy,sz,c,cc){
-			setpnts(x,y,z)
+			d.fillStyle = c
+			setpnts((x),y+sy/2,z)
 			z_sorting.push({
 			depth: pz,
 			draw: function(){
@@ -128,6 +129,11 @@
 			d.closePath()
 			d.fillStyle = c
 			d.fill()
+		}})
+			setpnts((x),y-sy/2,z)
+			z_sorting.push({
+			depth: pz,
+			draw: function(){
 			d.beginPath()
 			point((x)+sx/2,y-sy/2,z-sz/2)
 			drawto((x)+sx/2,y-sy/2,z+sz/2)
@@ -137,9 +143,12 @@
 			d.closePath()
 			d.fillStyle = c
 			d.fill()
-			d.beginPath()
+			}})
 			//f side
-			
+			setpnts((x),y,z-sz/2)
+			z_sorting.push({
+			depth: pz,
+			draw: function(){
 			d.beginPath()	
 			point((x)-sx/2,y+sy/2,z-sz/2)
 			drawto((x)+sx/2,y+sy/2,z-sz/2)
@@ -149,8 +158,12 @@
 			d.closePath()
 			d.fillStyle = c
 			d.fill()
-
-
+			}})
+			setpnts((x),y,z+sz/2)
+			z_sorting.push({
+			depth: pz,
+			draw: function(){
+			d.beginPath()
 			point((x)-sx/2,y+sy/2,z+sz/2)
 			drawto((x)+sx/2,y+sy/2,z+sz/2)
 			drawto((x)+sx/2,y-sy/2,z+sz/2) 
@@ -160,8 +173,11 @@
 			d.fillStyle = c
 			d.fill()
 			//b side
-			
-		
+			}})
+			setpnts((x)-sx/2,y,z)
+			z_sorting.push({
+			depth: pz,
+			draw: function(){
 			d.beginPath()
 			setpnts((x)-sx/2,y+sy/2,z-sz/2)
 			point((x)-sx/2,y+sy/2,z-sz/2)
@@ -172,7 +188,11 @@
 			d.closePath()
 			d.fillStyle = c
 			d.fill()
-			
+			}})
+			setpnts((x)+sx/2,y,z)
+			z_sorting.push({
+			depth: pz,
+			draw: function(){
 			d.beginPath()
 			point((x)+sx/2,y+sy/2,z-sz/2)
 			drawto((x)+sx/2,y+sy/2,z+sz/2)
@@ -182,8 +202,8 @@
 			d.closePath()
 			d.fillStyle = c
 			d.fill()
-			}
-			})
+			}})
+			
 			
 			
 			
@@ -288,5 +308,3 @@ $("#STOP").click(function(event) {
 	</script>
 </body>
 </html>
-
-
